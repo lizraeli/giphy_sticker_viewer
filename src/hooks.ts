@@ -46,15 +46,15 @@ export function useStickers(query: string) {
       const response = await getStickers(query, offset);
       const nextStickers = response.data.data;
       if (stickers) {
+        // Discard stickers that are already in the array
         const uniqueNextStickers = nextStickers.filter(
           nextSticker => 
-            stickers.findIndex(sticker => sticker.id === nextSticker.id) === -1
+            !stickers.some(sticker => sticker.id === nextSticker.id)
         );
         setStickers([...stickers, ...uniqueNextStickers]);
       } else {
         setStickers([...nextStickers]);
       }
-      // const currentStickers = stickers ||
       setOffset(offset + 1);
     } catch (err) {
       setError(err.message);
