@@ -2,6 +2,7 @@ import React, { useCallback, useState, useEffect } from "react";
 import axios, { AxiosPromise } from "axios";
 import { STICKER_API_BASE_URL } from "./constants";
 import { GIF } from "./types";
+import { zipUniques } from "./utils";
 
 const SEARCH_DELAY_MS = 500;
 
@@ -11,7 +12,9 @@ const getStickers = (
   query: string,
   offset: number = 0
 ): AxiosPromise<{ data: GIF[] }> =>
-  axios.get(STICKER_API_BASE_URL + `&q=${query}&offset=${offset * numOfStickers}`);
+  axios.get(
+    STICKER_API_BASE_URL + `&q=${query}&offset=${offset * numOfStickers}`
+  );
 
 export function useStickers(query: string) {
   const [stickers, setStickers] = useState<GIF[] | null>(null);
@@ -46,12 +49,8 @@ export function useStickers(query: string) {
       const response = await getStickers(query, offset);
       const nextStickers = response.data.data;
       if (stickers) {
-        // Discard stickers that are already in the array
-        const uniqueNextStickers = nextStickers.filter(
-          nextSticker => 
-            !stickers.some(sticker => sticker.id === nextSticker.id)
-        );
-        setStickers([...stickers, ...uniqueNextStickers]);
+        const allStickers = zipUniques(stickers, nextStickers, "id");
+        setStickers(allStickers);
       } else {
         setStickers([...nextStickers]);
       }
