@@ -37,16 +37,16 @@ export const StateProvider = ({ children }: { children: any }) => {
   const [theme, setTheme] = useState<ThemeValues>(themes.white);
 
   const setBackgroundColor = (color: string) => {
-    const { white, dark } = themes;
+    const { white: whiteTheme, dark: darkTheme } = themes;
     switch (color.toUpperCase()) {
-      case white.backgroundColor:
-        setTheme(white);
+      case whiteTheme.backgroundColor:
+        setTheme(whiteTheme);
         break;
-      case dark.backgroundColor:
-        setTheme(dark);
+      case darkTheme.backgroundColor:
+        setTheme(darkTheme);
         break;
       default:
-        setTheme(white);
+        setTheme(whiteTheme);
     }
   };
 
