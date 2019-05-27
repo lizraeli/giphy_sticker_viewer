@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { render } from "react-dom";
 import { Helmet } from "react-helmet";
 import { Grommet, Box, Button } from "grommet";
@@ -19,10 +19,22 @@ const globalTheme = {
   }
 };
 
+const urlParams = new URLSearchParams(window.location.search);
+const queryFromParam = urlParams.get("q");
+
 function App() {
   const [query, setQuery] = useState("");
   const [showSettings, setShowSettings] = useState(false);
-  const { stickers, offset, setOffset, fetching, fetchingMore, error } = useStickers(query);
+
+  const {
+    stickers,
+    offset,
+    setOffset,
+    fetching,
+    fetchingMore,
+    error
+  } = useStickers(query);
+
   const {
     values: { backgroundColor, color }
   } = useTheme();
@@ -36,8 +48,22 @@ function App() {
     }
   };
 
+  useEffect(() => {
+    if (queryFromParam) {
+      setQuery(queryFromParam);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (query === "" && queryFromParam){
+      return;
+    }
+    history.replaceState({}, "", `?q=${query}`);
+  }, [query]);
+
+
   return (
-    <div className="App">
+    <>
       <ToastContainer />
       <Helmet>
         <style type="text/css">{`
@@ -69,12 +95,12 @@ function App() {
             fetchingMore={fetchingMore}
             error={error}
             getMoreStickers={() => {
-              setOffset(offset + 1)
+              setOffset(offset + 1);
             }}
           />
         </Box>
       </Grommet>
-    </div>
+    </>
   );
 }
 

@@ -25,11 +25,14 @@ export function useStickers(query: string) {
 
   useEffect(() => {
     let cancelled = false;
+    
+    if (offset !== 0) {
+      setOffset(0);
+    }
 
     const searchStickers = async () => {
       try {
         setFetching(true);
-        setOffset(0);
 
         if (query === "") {
           setStickers(null);
@@ -42,9 +45,8 @@ export function useStickers(query: string) {
         if (cancelled) {
           return;
         }
-
+        
         setStickers(stickers.data.data);
-        setOffset(1);
       } catch (err) {
         if (cancelled) {
           return;
@@ -67,6 +69,10 @@ export function useStickers(query: string) {
   }, [query]);
 
   useEffect(() => {
+    if (offset == 0) {
+      return;
+    }
+
     const fetchMoreStickers = async () => {
       try {
         setFetchingMore(true);
