@@ -23,56 +23,69 @@ export function useStickers(query: string) {
   const [fetching, setFetching] = useState(false);
   const [fetchingMore, setFetchingMore] = useState(false);
 
-  const searchStickers = useCallback(async () => {
-    if (query === "") {
-      setStickers(null);
-      setFetching(false);
-      return;
-    }
-
-    try {
-      setOffset(0);
-      setFetching(true);
-      const stickers = await getStickers(query);
-      setStickers(stickers.data.data);
-      setOffset(1);
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setFetching(false);
-    }
-  }, [query]);
-
-  const getMoreStickers = async () => {
-    try {
-      setFetchingMore(true);
-      const response = await getStickers(query, offset);
-      const nextStickers = response.data.data;
-      if (stickers) {
-        const allStickers = zipUniques(stickers, nextStickers, "id");
-        setStickers(allStickers);
-      } else {
-        setStickers([...nextStickers]);
-      }
-      setOffset(offset + 1);
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setFetchingMore(false);
-    }
-  };
-
   useEffect(() => {
-    setFetching(true);
+    let cancelled = false;
 
-    const handler = setTimeout(() => {
+    const searchStickers = async () => {
+      try {
+        setFetching(true);
+        setOffset(0);
+
+        if (query === "") {
+          setStickers(null);
+          setFetching(false);
+          return;
+        }
+
+        const stickers = await getStickers(query);
+
+        if (cancelled) {
+          return;
+        }
+
+        setStickers(stickers.data.data);
+        setOffset(1);
+      } catch (err) {
+        if (cancelled) {
+          return;
+        }
+
+        setError(err.message);
+      } finally {
+        setFetching(false);
+      }
+    };
+
+    const timeoutID = setTimeout(() => {
       searchStickers();
     }, SEARCH_DELAY_MS);
 
     return () => {
-      clearTimeout(handler);
+      cancelled = true;
+      clearTimeout(timeoutID);
     };
-  }, [searchStickers]);
+  }, [query]);
 
-  return { stickers, getMoreStickers, fetching, fetchingMore, error };
+  useEffect(() => {
+    const fetchMoreStickers = async () => {
+      try {
+        setFetchingMore(true);
+        const response = await getStickers(query, offset);
+        const nextStickers = response.data.data;
+        if (!stickers) {
+          setStickers(nextStickers);
+        } else {
+          const allStickers = zipUniques(stickers, nextStickers, "id");
+          setStickers(allStickers);
+        }
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setFetchingMore(false);
+      }
+    };
+    fetchMoreStickers();
+  }, [offset]);
+
+  return { stickers, offset, setOffset, fetching, fetchingMore, error };
 }

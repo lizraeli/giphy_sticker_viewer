@@ -22,7 +22,7 @@ const globalTheme = {
 function App() {
   const [query, setQuery] = useState("");
   const [showSettings, setShowSettings] = useState(false);
-  const { stickers, getMoreStickers, fetching, fetchingMore, error } = useStickers(query);
+  const { stickers, offset, setOffset, fetching, fetchingMore, error } = useStickers(query);
   const {
     values: { backgroundColor, color }
   } = useTheme();
@@ -68,7 +68,9 @@ function App() {
             fetching={fetching}
             fetchingMore={fetchingMore}
             error={error}
-            getMoreStickers={getMoreStickers}
+            getMoreStickers={() => {
+              setOffset(offset + 1)
+            }}
           />
         </Box>
       </Grommet>
@@ -81,6 +83,5 @@ render(
   <StateProvider>
     <App />
   </StateProvider>,
-
   rootElement
 );
