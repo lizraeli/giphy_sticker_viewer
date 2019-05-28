@@ -4,12 +4,13 @@ import { Helmet } from "react-helmet";
 import { Grommet, Box, Button } from "grommet";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Loader from "react-loader-spinner";
 import { useStickers } from "./hooks";
 import SearchBar from "./SearchBar";
 import StickerList from "./StickerList";
 import Settings from "./Settings";
-import { StateProvider, useTheme } from "./state";
-
+import { ThemeProvider, useTheme } from "./ThemeProvider";
+import { QueryProvider, useQuery } from "./QueryProvider";
 
 const globalTheme = {
   global: {
@@ -20,20 +21,21 @@ const globalTheme = {
 };
 
 const urlParams = new URLSearchParams(window.location.search);
-const queryFromParam = urlParams.get("q");
 
-function App() {
-  const [query, setQuery] = useState("");
+const stickerCount = 25;
+
+function Root() {
+  const { query, setQuery } = useQuery();
+  const [prevQuery, setPrevQuery] = useState("");
   const [showSettings, setShowSettings] = useState(false);
-
+  const [distanceFromBottom, setDistanceFromBottom] = useState(0);
   const {
     stickers,
-    offset,
     setOffset,
     fetching,
     fetchingMore,
     error
-  } = useStickers(query);
+  } = useStickers(query, stickerCount);
 
   const {
     values: { backgroundColor, color }
@@ -49,18 +51,41 @@ function App() {
   };
 
   useEffect(() => {
-    if (queryFromParam) {
-      setQuery(queryFromParam);
+    const queryFromUrl = urlParams.get("q");
+
+    if (queryFromUrl) {
+      setQuery(queryFromUrl);
     }
   }, []);
 
   useEffect(() => {
-    if (query === "" && queryFromParam){
+    const handleScroll = () => {
+      const distanceFromBottom =
+        document.body.scrollHeight - window.innerHeight - window.scrollY;
+      setDistanceFromBottom(distanceFromBottom);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (query === "" && prevQuery === "") {
       return;
     }
+
     history.replaceState({}, "", `?q=${query}`);
+    setPrevQuery(query);
   }, [query]);
 
+  useEffect(() => {
+    if (distanceFromBottom <= 400 && !fetching && !fetchingMore) {
+      setOffset(offset => offset + 1);
+    }
+  }, [distanceFromBottom]);
 
   return (
     <>
@@ -88,16 +113,23 @@ function App() {
           />
         </Box>
         <Box direction="column" align="center">
-          <SearchBar query={query} setQuery={setQuery} />
+          <SearchBar  />
           <StickerList
             stickers={stickers}
             fetching={fetching}
-            fetchingMore={fetchingMore}
             error={error}
-            getMoreStickers={() => {
-              setOffset(offset + 1);
-            }}
           />
+
+          <Box direction="column" align="center">
+            {fetchingMore && (
+              <Loader
+                type="ThreeDots"
+                color="#00BFFF"
+                height="100"
+                width="100"
+              />
+            )}
+          </Box>
         </Box>
       </Grommet>
     </>
@@ -106,8 +138,10 @@ function App() {
 
 const rootElement = document.getElementById("root");
 render(
-  <StateProvider>
-    <App />
-  </StateProvider>,
+  <ThemeProvider>
+    <QueryProvider>
+      <Root />
+    </QueryProvider>
+  </ThemeProvider>,
   rootElement
 );

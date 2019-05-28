@@ -1,12 +1,9 @@
 import React, { FunctionComponent } from "react";
 import styled from "styled-components";
 import { Box, FormField, TextInput } from "grommet";
-import { useTheme, themes } from "./state";
+import { useTheme, themes } from "./ThemeProvider";
+import { useQuery } from "./QueryProvider";
 
-interface SearchBarProps {
-  query: string;
-  setQuery(value: string):  any;
-}
 
 const SearchField = styled(FormField)`
   ${({ color }) =>
@@ -16,10 +13,12 @@ const SearchField = styled(FormField)`
   `}
 `;
 
-const SearchBar: FunctionComponent<SearchBarProps> = ({ query, setQuery }) => {
+const SearchBar: FunctionComponent = () => {
   const {
     values: { color }
   } = useTheme();
+  const {query, setQuery} = useQuery();
+
   return (
     <Box
       direction="row"

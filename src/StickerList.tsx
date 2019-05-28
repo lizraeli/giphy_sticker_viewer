@@ -21,9 +21,7 @@ const List = styled.div`
 interface StickerListProps {
   stickers: GIF[] | null;
   fetching: boolean;
-  fetchingMore: boolean;
   error: string;
-  getMoreStickers(): void;
 }
 
 const LoadingWrap = styled.div`
@@ -32,9 +30,7 @@ const LoadingWrap = styled.div`
 
 const StickerList: FunctionComponent<StickerListProps> = ({
   stickers,
-  getMoreStickers,
   fetching,
-  fetchingMore,
   error
 }) => {
   if (fetching) {
@@ -51,10 +47,11 @@ const StickerList: FunctionComponent<StickerListProps> = ({
 
   return (
     <List>
-      {stickers.map(sticker => {
+      {stickers.map((sticker, index) => {
         const { title, slug, images } = sticker;
         const { url } = images.fixed_width_small;
         const { url: originalUrl } = images.original;
+
         return (
           <Sticker
             key={slug}
@@ -70,20 +67,6 @@ const StickerList: FunctionComponent<StickerListProps> = ({
           />
         );
       })}
-      <Box direction="column" align="center">
-        {fetchingMore ? (
-          <Loader type="ThreeDots" color="#00BFFF" height="100" width="100" />
-        ) : (
-          <Button
-            fill="horizontal"
-            label="More"
-            onClick={() => {
-              getMoreStickers();
-              scroll.scrollToBottom();
-            }}
-          />
-        )}
-      </Box >
     </List>
   );
 };

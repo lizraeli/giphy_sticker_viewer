@@ -6,46 +6,36 @@ import { zipUniques } from "./utils";
 
 const SEARCH_DELAY_MS = 500;
 
-const numOfStickers = 25;
-
 const getStickers = (
   query: string,
+  numOfStickers: number = 25,
   offset: number = 0
 ): AxiosPromise<{ data: GIF[] }> =>
   axios.get(
     STICKER_API_BASE_URL + `&q=${query}&offset=${offset * numOfStickers}`
   );
 
-export function useStickers(query: string) {
+export function useStickers(query: string, numOfStickers: number = 25) {
   const [stickers, setStickers] = useState<GIF[] | null>(null);
   const [offset, setOffset] = useState(0);
   const [error, setError] = useState("");
-  const [fetching, setFetching] = useState(false);
+  const [fetching, setFetching] = useState(true);
   const [fetchingMore, setFetchingMore] = useState(false);
+  const [prevQuery, setPrevQuery] = useState("");
 
   useEffect(() => {
     let cancelled = false;
-    
-    if (offset !== 0) {
-      setOffset(0);
-    }
 
     const searchStickers = async () => {
       try {
         setFetching(true);
 
-        if (query === "") {
-          setStickers(null);
-          setFetching(false);
-          return;
-        }
-
-        const stickers = await getStickers(query);
+        const stickers = await getStickers(query, numOfStickers);
 
         if (cancelled) {
           return;
         }
-        
+
         setStickers(stickers.data.data);
       } catch (err) {
         if (cancelled) {
@@ -58,25 +48,10 @@ export function useStickers(query: string) {
       }
     };
 
-    const timeoutID = setTimeout(() => {
-      searchStickers();
-    }, SEARCH_DELAY_MS);
-
-    return () => {
-      cancelled = true;
-      clearTimeout(timeoutID);
-    };
-  }, [query]);
-
-  useEffect(() => {
-    if (offset == 0) {
-      return;
-    }
-
     const fetchMoreStickers = async () => {
       try {
         setFetchingMore(true);
-        const response = await getStickers(query, offset);
+        const response = await getStickers(query, numOfStickers, offset);
         const nextStickers = response.data.data;
         if (!stickers) {
           setStickers(nextStickers);
@@ -90,8 +65,32 @@ export function useStickers(query: string) {
         setFetchingMore(false);
       }
     };
-    fetchMoreStickers();
-  }, [offset]);
+
+    if (query === "") {
+      setPrevQuery("");
+      setStickers(null);
+      setFetching(false);
+    } else if (query !== prevQuery) {
+      setPrevQuery(query);
+      setFetching(true);
+      setOffset(0);
+
+      const timeoutID = setTimeout(() => {
+        searchStickers();
+      }, SEARCH_DELAY_MS);
+
+      return () => {
+        cancelled = true;
+        clearTimeout(timeoutID);
+      };
+    } else {
+      setPrevQuery(query);
+      fetchMoreStickers();
+      return () => {
+        cancelled = true;
+      };
+    }
+  }, [query, offset]);
 
   return { stickers, offset, setOffset, fetching, fetchingMore, error };
 }
