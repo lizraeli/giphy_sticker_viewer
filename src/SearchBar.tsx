@@ -4,7 +4,6 @@ import { Box, FormField, TextInput } from "grommet";
 import { useTheme, themes } from "./ThemeProvider";
 import { useQuery } from "./QueryProvider";
 
-
 const SearchField = styled(FormField)`
   ${({ color }) =>
     color &&
@@ -17,7 +16,7 @@ const SearchBar: FunctionComponent = () => {
   const {
     values: { color }
   } = useTheme();
-  const {query, setQuery} = useQuery();
+  const { query, setQuery } = useQuery();
 
   return (
     <Box
