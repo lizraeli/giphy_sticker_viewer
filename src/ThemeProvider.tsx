@@ -33,7 +33,7 @@ const ThemeContext = createContext<ThemeProps>({
   setBackgroundColor: () => {}
 });
 
-export const StateProvider = ({ children }: { children: any }) => {
+export const ThemeProvider = ({ children }: { children: any }) => {
   const [theme, setTheme] = useState<ThemeValues>(themes.white);
 
   const setBackgroundColor = (color: string) => {
