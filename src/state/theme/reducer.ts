@@ -5,7 +5,7 @@ import { themeList } from "./constants";
 export const themeReducer = (state: ThemeValues, action: ThemeAction) => {
   switch (action.type) {
     case ThemeActionType.SET_THEME: {
-      const selectedColor = action.color.toLowerCase();
+      const selectedColor = action.color.toUpperCase();
       const newTheme = themeList.find(
         theme => theme.backgroundColor === selectedColor
       );
