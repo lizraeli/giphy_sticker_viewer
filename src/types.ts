@@ -293,3 +293,7 @@ export interface Image {
   // The height of this GIF in pixels.
   height: string;
 }
+
+export interface ProviderProps {
+  children: JSX.Element
+}

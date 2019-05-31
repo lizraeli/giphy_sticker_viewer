@@ -1,12 +1,9 @@
-import React, { FunctionComponent, useState } from "react";
-import { GIF } from "./types";
+import React, { FunctionComponent } from "react";
 import styled from "styled-components";
 import copyToClipboard from "copy-to-clipboard";
-import { animateScroll as scroll } from "react-scroll";
-
-import { Box, Button } from "grommet";
 import Loader from "react-loader-spinner";
 import { toast } from "react-toastify";
+import { GIF } from "./types";
 import Sticker from "./Sticker";
 import Message from "./Message";
 

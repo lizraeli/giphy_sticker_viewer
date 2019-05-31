@@ -9,7 +9,7 @@ import { useStickers } from "./hooks";
 import SearchBar from "./SearchBar";
 import StickerList from "./StickerList";
 import Settings from "./Settings";
-import { ThemeProvider, useTheme } from "./ThemeProvider";
+import { ThemeProvider, useTheme } from "./state/theme";
 import { QueryProvider, useQuery } from "./QueryProvider";
 
 const makeGrommetTheme = (textColor: string) => ({

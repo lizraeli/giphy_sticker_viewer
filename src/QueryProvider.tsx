@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useState } from "react";
+import React, {
+  FunctionComponent,
+  createContext,
+  useContext,
+  useState
+} from "react";
+import { ProviderProps } from "./types";
 
 interface QueryProps {
   query: string;
@@ -10,7 +16,9 @@ export const QueryContext = createContext<QueryProps>({
   setQuery: () => {}
 });
 
-export const QueryProvider = ({ children }: { children: any }) => {
+export const QueryProvider: FunctionComponent<ProviderProps> = ({
+  children
+}) => {
   const [query, setQuery] = useState("");
 
   return (

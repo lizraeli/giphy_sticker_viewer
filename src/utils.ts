@@ -15,3 +15,12 @@ export const zipUniques = <T, K extends keyof T>(
   );
   return [...arr1, ...uniqueArr2];
 };
+
+export function makeDispatcher<T, ActionArgs>(
+  dispatch: React.Dispatch<T>,
+  actionCreator: (args: ActionArgs) => T
+) {
+  return function(args: ActionArgs) {
+    dispatch(actionCreator(args));
+  };
+}

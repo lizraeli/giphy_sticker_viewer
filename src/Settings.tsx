@@ -2,7 +2,7 @@ import React, { FunctionComponent } from "react";
 import styled from "styled-components";
 import { Box, Text, Layer, Button, ThemeContext } from "grommet";
 import { CirclePicker } from "react-color";
-import { useTheme, themes } from "./ThemeProvider";
+import { useTheme, themes } from "./state/theme";
 
 const colorList = Object.values(themes).map(theme => theme.backgroundColor);
 
@@ -15,7 +15,7 @@ interface SettingsProps {
 }
 
 const SettingsModal: FunctionComponent<SettingsProps> = ({ hide }) => {
-  const { values, setBackgroundColor } = useTheme();
+  const { values, setTheme } = useTheme();
   const { backgroundColor, color } = values;
 
   return (
@@ -32,7 +32,7 @@ const SettingsModal: FunctionComponent<SettingsProps> = ({ hide }) => {
               circleSpacing={50}
               colors={colorList}
               color={backgroundColor}
-              onChangeComplete={color => setBackgroundColor(color.hex)}
+              onChangeComplete={color => setTheme(color.hex)}
             />
           </Box>
           <Button label="close" onClick={hide} />

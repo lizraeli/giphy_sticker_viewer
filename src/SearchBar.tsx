@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from "react";
 import styled from "styled-components";
 import { Box, FormField, TextInput } from "grommet";
-import { useTheme, themes } from "./ThemeProvider";
+import { useTheme } from "./state/theme";
 import { useQuery } from "./QueryProvider";
 
 const SearchField = styled(FormField)`

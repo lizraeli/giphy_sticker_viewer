@@ -3,7 +3,7 @@ import styled from "styled-components";
 import ProgressiveImage from "react-progressive-image";
 import Loader from "react-loader-spinner";
 import { Box, Text } from "grommet";
-import { useTheme } from "./ThemeProvider";
+import { useTheme } from "./state/theme";
 
 const StickerBox = styled(Box)`
   :hover {

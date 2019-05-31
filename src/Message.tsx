@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from "react";
 import { Box, Text } from "grommet";
-import { useTheme } from "./ThemeProvider";
+import { useTheme } from "./state/theme";
 
 interface MessageProps {
   text: string;
@@ -8,7 +8,7 @@ interface MessageProps {
 
 const Message: FunctionComponent<MessageProps> = ({ text }) => {
   const {
-    values: { color, stickerBackgroundColor }
+    values: { color }
   } = useTheme();
 
   return (
