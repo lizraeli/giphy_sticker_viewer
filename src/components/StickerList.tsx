@@ -3,7 +3,7 @@ import styled from "styled-components";
 import copyToClipboard from "copy-to-clipboard";
 import Loader from "react-loader-spinner";
 import { toast } from "react-toastify";
-import { GIF } from "./types";
+import { GIF } from "../types";
 import Sticker from "./Sticker";
 import Message from "./Message";
 

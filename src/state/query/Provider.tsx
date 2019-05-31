@@ -4,7 +4,7 @@ import React, {
   useContext,
   useState
 } from "react";
-import { ProviderProps } from "./types";
+import { ProviderProps } from "../../types";
 
 interface QueryProps {
   query: string;

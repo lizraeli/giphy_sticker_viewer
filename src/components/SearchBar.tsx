@@ -1,8 +1,8 @@
 import React, { FunctionComponent } from "react";
 import styled from "styled-components";
 import { Box, FormField, TextInput } from "grommet";
-import { useTheme } from "./state/theme";
-import { useQuery } from "./QueryProvider";
+import { useTheme } from "../state/theme";
+import { useQuery } from "../state/query";
 
 const SearchField = styled(FormField)`
   ${({ color }) =>

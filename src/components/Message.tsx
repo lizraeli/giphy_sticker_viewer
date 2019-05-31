@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from "react";
 import { Box, Text } from "grommet";
-import { useTheme } from "./state/theme";
+import { useTheme } from "../state/theme";
 
 interface MessageProps {
   text: string;

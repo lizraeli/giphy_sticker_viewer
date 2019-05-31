@@ -2,9 +2,9 @@ import React, { FunctionComponent } from "react";
 import styled from "styled-components";
 import { Box, Text, Layer, Button, ThemeContext } from "grommet";
 import { CirclePicker } from "react-color";
-import { useTheme, themes } from "./state/theme";
+import { useTheme, themes, themeList } from "../state/theme";
 
-const colorList = Object.values(themes).map(theme => theme.backgroundColor);
+const colorList = themeList.map(theme => theme.backgroundColor);
 
 const StyledPicker = styled(CirclePicker)`
   justify-content: center;

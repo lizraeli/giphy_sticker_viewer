@@ -6,11 +6,11 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Loader from "react-loader-spinner";
 import { useStickers } from "./hooks";
-import SearchBar from "./SearchBar";
-import StickerList from "./StickerList";
-import Settings from "./Settings";
+import SearchBar from "./components/SearchBar";
+import StickerList from "./components/StickerList";
+import Settings from "./components/Settings";
 import { ThemeProvider, useTheme } from "./state/theme";
-import { QueryProvider, useQuery } from "./QueryProvider";
+import { QueryProvider, useQuery } from "./state/query";
 
 const makeGrommetTheme = (textColor: string) => ({
   global: {
