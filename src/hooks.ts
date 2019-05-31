@@ -26,7 +26,7 @@ export function useStickers(query: string, numOfStickers: number = 25) {
   useEffect(() => {
     let cancelled = false;
 
-    const searchStickers = async () => {
+    const fetchStickers = async () => {
       try {
         setFetching(true);
 
@@ -52,6 +52,11 @@ export function useStickers(query: string, numOfStickers: number = 25) {
       try {
         setFetchingMore(true);
         const response = await getStickers(query, numOfStickers, offset);
+
+        if (cancelled) {
+          return;
+        }
+
         const nextStickers = response.data.data;
         if (!stickers) {
           setStickers(nextStickers);
@@ -60,23 +65,26 @@ export function useStickers(query: string, numOfStickers: number = 25) {
           setStickers(allStickers);
         }
       } catch (err) {
+        if (cancelled) {
+          return;
+        }
+
         setError(err.message);
       } finally {
         setFetchingMore(false);
       }
     };
 
+    setPrevQuery(query);
+
     if (query === "") {
-      setPrevQuery("");
       setStickers(null);
-      setFetching(false);
     } else if (query !== prevQuery) {
-      setPrevQuery(query);
       setFetching(true);
       setOffset(0);
 
       const timeoutID = setTimeout(() => {
-        searchStickers();
+        fetchStickers();
       }, SEARCH_DELAY_MS);
 
       return () => {
@@ -84,7 +92,7 @@ export function useStickers(query: string, numOfStickers: number = 25) {
         clearTimeout(timeoutID);
       };
     } else {
-      setPrevQuery(query);
+      /* query === prevQuery */
       fetchMoreStickers();
       return () => {
         cancelled = true;

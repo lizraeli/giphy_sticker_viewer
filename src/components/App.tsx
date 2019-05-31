@@ -34,7 +34,7 @@ export default function App() {
     stickerCount
   );
 
-  // Set up scroll handler
+  // Track scrolling and distance from bottom of page
   useEffect(() => {
     const handleScroll = () => {
       const distanceFromBottom =
