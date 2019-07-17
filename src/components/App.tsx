@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
+import styled from "styled-components";
 import { Grommet, Box, Button } from "grommet";
 import Loader from "react-loader-spinner";
 import { useStickers } from "../hooks";
 import SearchBar from "./SearchBar";
 import StickerList from "./StickerList";
 import Settings from "./Settings";
+import TopMenu from "./TopMenu";
 import { useTheme } from "../state/theme";
 import { useQuery } from "../state/query";
 
@@ -78,18 +80,7 @@ export default function App() {
   return (
     <Grommet theme={makeGrommetTheme(color)}>
       {showSettings && <Settings hide={() => setShowSettings(false)} />}
-      <Box
-        align="center"
-        margin={{ bottom: "large" }}
-        pad="large"
-        border="bottom"
-      >
-        <Button
-          label="settings"
-          color={color}
-          onClick={() => setShowSettings(true)}
-        />
-      </Box>
+      <TopMenu onShowSettings={() => setShowSettings(true)} distanceFromBottom={distanceFromBottom} />
       <Box direction="column" align="center">
         <SearchBar />
         <StickerList stickers={stickers} fetching={fetching} error={error} />
