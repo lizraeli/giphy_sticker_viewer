@@ -23,7 +23,7 @@ const SettingsModal: FunctionComponent<SettingsProps> = ({ hide }) => {
       value={{ layer: { background: { color: backgroundColor } } }}
     >
       <Layer onEsc={hide} onClickOutside={hide}>
-        <Box align="center" pad="xlarge">
+        <Box align="center" pad="xlarge" animation="fadeIn">
           <Text size="xlarge" margin="medium" color={color}>
             Theme
           </Text>

@@ -29,8 +29,7 @@ export default function App() {
   const { query, setQuery } = useQuery();
   const [prevQuery, setPrevQuery] = useState("");
   const [showSettings, setShowSettings] = useState(false);
-
-  const {distanceFromBottom, distanceFromTop} = useScroll()
+  const { distanceFromBottom, distanceFromTop } = useScroll();
   const { stickers, setOffset, fetching, fetchingMore, error } = useStickers(
     query,
     stickerCount
@@ -65,7 +64,10 @@ export default function App() {
   return (
     <Grommet theme={makeGrommetTheme(color)}>
       {showSettings && <Settings hide={() => setShowSettings(false)} />}
-      <TopMenu onShowSettings={() => setShowSettings(true)} distanceFromTop={distanceFromTop} />
+      <TopMenu
+        onShowSettings={() => setShowSettings(true)}
+        distanceFromTop={distanceFromTop}
+      />
       <Box direction="column" align="center">
         <SearchBar />
         <StickerList stickers={stickers} fetching={fetching} error={error} />
