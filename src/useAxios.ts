@@ -11,6 +11,7 @@ export function useAxiosGet<T>(
 
   useEffect(() => {
     if (url === "") {
+      setFetching(false);
       return;
     }
 
@@ -29,20 +30,23 @@ export function useAxiosGet<T>(
           return;
         }
 
+        setFetching(false);
         setError(err);
       } finally {
         if (cancelled) {
           return;
         }
+      
         setFetching(false);
       }
     };
 
     if (debounceMs) {
       const timeoutId = setTimeout(() => {
-        if (!cancelled) {
-          fetch();
+        if (cancelled){
+          return;
         }
+        fetch();
       }, debounceMs);
       return () => {
         cancelled = true;
