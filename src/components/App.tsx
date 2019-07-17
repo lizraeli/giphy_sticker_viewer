@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
-import styled from "styled-components";
-import { Grommet, Box, Button } from "grommet";
+import { Grommet, Box } from "grommet";
 import Loader from "react-loader-spinner";
-import { useStickers } from "../hooks";
+import { useStickers, useScroll } from "../hooks";
 import SearchBar from "./SearchBar";
 import StickerList from "./StickerList";
 import Settings from "./Settings";
@@ -30,26 +29,12 @@ export default function App() {
   const { query, setQuery } = useQuery();
   const [prevQuery, setPrevQuery] = useState("");
   const [showSettings, setShowSettings] = useState(false);
-  const [distanceFromBottom, setDistanceFromBottom] = useState(0);
+
+  const {distanceFromBottom, distanceFromTop} = useScroll()
   const { stickers, setOffset, fetching, fetchingMore, error } = useStickers(
     query,
     stickerCount
   );
-
-  // Track scrolling and distance from bottom of page
-  useEffect(() => {
-    const handleScroll = () => {
-      const distanceFromBottom =
-        document.body.scrollHeight - window.innerHeight - window.scrollY;
-      setDistanceFromBottom(distanceFromBottom);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
 
   // Trigger fetching more when close to bottom of page
   useEffect(() => {
@@ -80,7 +65,7 @@ export default function App() {
   return (
     <Grommet theme={makeGrommetTheme(color)}>
       {showSettings && <Settings hide={() => setShowSettings(false)} />}
-      <TopMenu onShowSettings={() => setShowSettings(true)} distanceFromBottom={distanceFromBottom} />
+      <TopMenu onShowSettings={() => setShowSettings(true)} distanceFromTop={distanceFromTop} />
       <Box direction="column" align="center">
         <SearchBar />
         <StickerList stickers={stickers} fetching={fetching} error={error} />

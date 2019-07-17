@@ -1,7 +1,7 @@
-import React, { useCallback, useState, useEffect } from "react";
-import axios, { AxiosResponse } from "axios";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
-export function useAxiosGet<T>(
+export default function useAxiosGet<T>(
   url: string,
   debounceMs?: number
 ): { data: T | null; error: string; fetching: boolean } {

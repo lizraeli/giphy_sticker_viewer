@@ -1,6 +1,6 @@
 {
   "include": [
-    "./src/*", "src/components/StickerList.tsx", "src/components/Sticker.tsx", "src/components/Settings.tsx", "src/components/SearchBar.tsx", "src/components/Message.tsx"
+    "./src/*"
   ],
   "compilerOptions": {
     "lib": [

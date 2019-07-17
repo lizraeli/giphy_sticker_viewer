@@ -1,22 +1,22 @@
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent, useEffect } from "react";
 import styled from "styled-components";
 import { Box, Button } from "grommet";
 import { useTheme } from "../state/theme";
 
 interface MenuProps {
   onShowSettings: () => void;
-  distanceFromBottom: number;
+  distanceFromTop: number;
 }
 
 interface TopMenuProps {
-  showFloatingMenu: boolean;
+  fixedToTop: boolean;
 }
 
 const Menu = styled.div<TopMenuProps>`
   z-index: 999;
   width: 100%;
-  ${props =>
-    props.showFloatingMenu &&
+  ${({fixedToTop}) =>
+    fixedToTop &&
     `
     position: fixed;
   `}
@@ -29,26 +29,29 @@ const scrollToTop = () => {
   });
 };
 
-const TopMenu: FunctionComponent<MenuProps> = ({ onShowSettings }) => {
+const TopMenu: FunctionComponent<MenuProps> = ({ onShowSettings, distanceFromTop }) => {
   const {
     values: { backgroundColor, color }
   } = useTheme();
 
-  const showFloatingMenu = window.scrollY > 200;
+
+ 
+  const showFloatingMenu = distanceFromTop > 200;
+
   return (
-    <Menu showFloatingMenu={showFloatingMenu}>
+    <Menu fixedToTop={showFloatingMenu}>
       <Box
         align="center"
         margin={{ bottom: "large" }}
         pad={showFloatingMenu ? "medium" : "large"}
-        border={showFloatingMenu && {
-          "size": "xsmall",
-          "side": "bottom"
-        }}
         fill="horizontal"
-        background={backgroundColor}
+        background={{ color: backgroundColor }}
         justify="around"
         direction="row"
+        {...showFloatingMenu && {
+          animation: "zoomIn",
+          border: { size: "xsmall", side: "bottom" }
+        }}
       >
         <Button label="settings" color={color} onClick={onShowSettings} />
         {showFloatingMenu && (

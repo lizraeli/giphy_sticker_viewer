@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
-import { STICKER_API_BASE_URL } from "./constants";
-import { GIF } from "./types";
-import { zipUniques } from "./utils";
-import { useAxiosGet } from "./useAxios";
+import { STICKER_API_BASE_URL } from "../constants";
+import { GIF } from "../types";
+import { zipUniques } from "../utils";
+import { useAxios } from "../hooks";
 
 const SEARCH_DELAY_MS = 500;
 
-export function useStickers(query: string, numOfStickers: number = 25) {
+export default function useStickers(query: string, numOfStickers: number = 25) {
   const [stickers, setStickers] = useState<GIF[] | null>(null);
   const [offset, setOffset] = useState(0);
   const [prevQuery, setPrevQuery] = useState("");
@@ -17,7 +17,7 @@ export function useStickers(query: string, numOfStickers: number = 25) {
     data: stickersResponse,
     fetching,
     error: fetchingStickersError
-  } = useAxiosGet<{
+  } = useAxios<{
     data: GIF[];
   }>(url, SEARCH_DELAY_MS);
 
@@ -25,7 +25,7 @@ export function useStickers(query: string, numOfStickers: number = 25) {
     data: moreStickersResponse,
     fetching: fetchingMore,
     error: fetchingMoreError
-  } = useAxiosGet<{
+  } = useAxios<{
     data: GIF[];
   }>(moreStickersUrl);
 
