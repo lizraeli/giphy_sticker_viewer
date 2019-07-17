@@ -67,7 +67,7 @@ export default function App() {
 
   // Set query as url param
   useEffect(() => {
-    if (query === "" && prevQuery === "") {
+    if (query === prevQuery) {
       return;
     }
 
