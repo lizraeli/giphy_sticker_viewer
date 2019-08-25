@@ -2,10 +2,11 @@ import React, {
   FunctionComponent,
   createContext,
   useContext,
-  useReducer
+  useReducer,
+  useCallback
 } from "react";
 import { ProviderProps } from "../../types";
-import { setTheme } from "./actions";
+import { ThemeActionType } from "./actions";
 import { ThemeValues } from "./types";
 import { themes } from "./constants";
 import { themeReducer } from "./reducer";
@@ -24,7 +25,14 @@ export const ThemeProvider: FunctionComponent<ProviderProps> = ({
   children
 }) => {
   const [theme, dispatch] = useReducer(themeReducer, themes.white);
-  const dispatchSetTheme = (color: string) => dispatch(setTheme(color));
+  const dispatchSetTheme = useCallback(
+    (color: string) =>
+      dispatch({
+        type: ThemeActionType.SET_THEME,
+        color
+      }),
+    []
+  );
 
   return (
     <ThemeContext.Provider

@@ -8,8 +8,3 @@ export interface SetThemeAction {
 }
 
 export type ThemeAction = SetThemeAction;
-
-export const setTheme = (color: string): ThemeAction => ({
-  type: ThemeActionType.SET_THEME,
-  color
-});
