@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import { GIF } from "../types";
 import Sticker from "./Sticker";
 import Message from "./Message";
+import { useHistory } from "../state/history";
 
 const List = styled.div`
   display: "flex";
@@ -30,6 +31,11 @@ const StickerList: FunctionComponent<StickerListProps> = ({
   fetching,
   error
 }) => {
+  const {
+    values: { stickers: historyStickers },
+    addSticker
+  } = useHistory();
+  console.log("history: ", historyStickers);
   if (fetching) {
     return (
       <LoadingWrap>
@@ -44,7 +50,7 @@ const StickerList: FunctionComponent<StickerListProps> = ({
 
   return (
     <List>
-      {stickers.map((sticker, index) => {
+      {stickers.map(sticker => {
         const { title, slug, images } = sticker;
         const { url } = images.fixed_width_small;
         const { url: originalUrl } = images.original;
@@ -60,6 +66,7 @@ const StickerList: FunctionComponent<StickerListProps> = ({
                 position: toast.POSITION.TOP_CENTER,
                 autoClose: 1000
               });
+              addSticker(sticker);
             }}
           />
         );
