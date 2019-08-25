@@ -30,15 +30,18 @@ export default function App() {
   const [prevQuery, setPrevQuery] = useState("");
   const [showSettings, setShowSettings] = useState(false);
   const { distanceFromBottom, distanceFromTop } = useScroll();
-  const { stickers, setOffset, fetching, fetchingMore, error } = useStickers(
-    query,
-    stickerCount
-  );
+  const {
+    stickers,
+    fetchMore: fetchMoreStickers,
+    fetching,
+    fetchingMore,
+    error
+  } = useStickers(query, stickerCount);
 
   // Trigger fetching more when close to bottom of page
   useEffect(() => {
     if (distanceFromBottom <= 400 && !fetching && !fetchingMore) {
-      setOffset(offset => offset + 1);
+      fetchMoreStickers();
     }
   }, [distanceFromBottom]);
 

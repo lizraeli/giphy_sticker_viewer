@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { STICKER_API_BASE_URL } from "../constants";
 import { GIF } from "../types";
 import { zipUniques } from "../utils";
@@ -41,7 +41,9 @@ export default function useStickers(query: string, numOfStickers: number = 25) {
 
     if (!moreStickers) {
       return;
-    } else if (!stickers) {
+    }  
+    
+    if (!stickers) {
       setStickers(moreStickers);
     } else {
       const allStickers = zipUniques(stickers, moreStickers, "id");
@@ -67,10 +69,15 @@ export default function useStickers(query: string, numOfStickers: number = 25) {
     }
   }, [query, offset]);
 
+  const fetchMore = useCallback(() => {
+    setOffset(offset => offset + 1)
+  }, [])
+
   return {
     stickers,
     offset,
     setOffset,
+    fetchMore,
     fetching,
     fetchingMore,
     error: fetchingStickersError || fetchingMoreError
