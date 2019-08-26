@@ -1,3 +1,5 @@
+import React from "react";
+
 /**
  * Returns the union of the two given arrays,
  * removing duplicates from the second array
@@ -8,10 +10,10 @@ export const zipUniques = <T, K extends keyof T>(
   arr2: T[],
   key: K
 ): T[] => {
-  // Only keep the element in arr2, where arr1 
+  // Only keep the element in arr2, where arr1
   // has no element with the same value for the given key
-  const uniqueArr2 = arr2.filter(elem2 =>
-    !arr1.some(elem1 => elem1[key] === elem2[key])
+  const uniqueArr2 = arr2.filter(
+    elem2 => !arr1.some(elem1 => elem1[key] === elem2[key])
   );
   return [...arr1, ...uniqueArr2];
 };
@@ -24,3 +26,18 @@ export function makeDispatcher<T, ActionArgs>(
     dispatch(actionCreator(args));
   };
 }
+
+type Comp = React.FunctionComponent<any> | React.ComponentClass<any, any>
+
+export const nest = (...components: Comp[] ) => {
+  const reversed = [...components].reverse();
+
+  const [first, ...rest] = reversed;
+
+  let elem = React.createElement(first);
+  for (const comp of rest) {
+    elem = React.createElement(comp, null, elem);
+  }
+
+  return elem;
+};

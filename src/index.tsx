@@ -3,6 +3,7 @@ import { render } from "react-dom";
 import { Helmet } from "react-helmet";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { nest } from "./utils";
 import App from "./components/App";
 import { ThemeProvider, useTheme } from "./state/theme";
 import { QueryProvider } from "./state/query";
@@ -30,13 +31,4 @@ function Root() {
 }
 
 const rootElement = document.getElementById("root");
-render(
-  <ThemeProvider>
-    <QueryProvider>
-      <HistoryProvider>
-        <Root />
-      </HistoryProvider>
-    </QueryProvider>
-  </ThemeProvider>,
-  rootElement
-);
+render(nest(ThemeProvider, QueryProvider, HistoryProvider, Root), rootElement);
