@@ -6,6 +6,7 @@ import SearchBar from "./SearchBar";
 import StickerList from "./StickerList";
 import Settings from "./Settings";
 import TopMenu from "./TopMenu";
+import { useHistory } from "../state/history";
 import { useTheme } from "../state/theme";
 import { useQuery } from "../state/query";
 
@@ -26,9 +27,13 @@ export default function App() {
   const {
     values: { color }
   } = useTheme();
+  const {
+    values: { stickers: historyStickers }
+  } = useHistory();
   const { query, setQuery } = useQuery();
   const [prevQuery, setPrevQuery] = useState("");
   const [showSettings, setShowSettings] = useState(false);
+  const [showHistory, setShowHistory] = useState(false);
   const { distanceFromBottom, distanceFromTop } = useScroll();
   const {
     stickers,
@@ -40,6 +45,10 @@ export default function App() {
 
   // Trigger fetching more when close to bottom of page
   useEffect(() => {
+    if (showHistory) {
+      return;
+    }
+
     if (distanceFromBottom <= 400 && !fetching && !fetchingMore) {
       fetchMoreStickers();
     }
@@ -69,12 +78,22 @@ export default function App() {
       {showSettings && <Settings hide={() => setShowSettings(false)} />}
       <TopMenu
         onShowSettings={() => setShowSettings(true)}
+        onShowHistory={() => setShowHistory(true)}
         distanceFromTop={distanceFromTop}
       />
       <Box direction="column" align="center">
-        <SearchBar />
-        <StickerList stickers={stickers} fetching={fetching} error={error} />
-
+        {showHistory ? (
+          <StickerList stickers={historyStickers} />
+        ) : (
+          <>
+            <SearchBar />
+            <StickerList
+              stickers={stickers}
+              fetching={fetching}
+              error={error}
+            />
+          </>
+        )}
         <Box direction="column" align="center">
           {fetchingMore && (
             <Loader type="ThreeDots" color="#00BFFF" height="100" width="100" />

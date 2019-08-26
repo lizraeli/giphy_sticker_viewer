@@ -18,8 +18,8 @@ const List = styled.div`
 
 interface StickerListProps {
   stickers: GIF[] | null;
-  fetching: boolean;
-  error: string;
+  fetching?: boolean;
+  error?: string;
 }
 
 const LoadingWrap = styled.div`

@@ -5,6 +5,7 @@ import { useTheme } from "../state/theme";
 
 interface MenuProps {
   onShowSettings: () => void;
+  onShowHistory: () => void;
   distanceFromTop: number;
 }
 
@@ -30,6 +31,7 @@ const scrollToTop = () => {
 };
 
 const TopMenu: FunctionComponent<MenuProps> = ({
+  onShowHistory,
   onShowSettings,
   distanceFromTop
 }) => {
@@ -54,7 +56,6 @@ const TopMenu: FunctionComponent<MenuProps> = ({
           border={{ size: "xsmall", side: "bottom" }}
         >
           <Button label="settings" color={color} onClick={onShowSettings} />
-
           <Button label="↑" color={color} onClick={scrollToTop} />
         </Box>
       </Menu>
@@ -69,10 +70,12 @@ const TopMenu: FunctionComponent<MenuProps> = ({
         pad={"large"}
         fill="horizontal"
         background={{ color: backgroundColor }}
-        justify="around"
+        justify="evenly"
         direction="row"
       >
         <Button label="settings" color={color} onClick={onShowSettings} />
+        <Button label="recent" color={color} onClick={onShowHistory} />
+
       </Box>
     </Menu>
   );
