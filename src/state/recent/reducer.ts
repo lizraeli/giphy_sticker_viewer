@@ -20,6 +20,7 @@ export const historyReducer = (
         stickers: [...state.stickers, action.sticker]
       };
     }
+
     case HistoryActionType.REMOVE_STICKER: {
       const stickers = state.stickers.filter(
         sticker => sticker.id === action.stickerId
@@ -30,6 +31,14 @@ export const historyReducer = (
         stickers
       };
     }
+
+    case HistoryActionType.SET_STICKERS: {
+      return {
+        ...state,
+        stickers: action.stickers
+      }
+    }
+
     default:
       return state;
   }
