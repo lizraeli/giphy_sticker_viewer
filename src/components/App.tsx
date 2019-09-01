@@ -4,9 +4,9 @@ import Loader from "react-loader-spinner";
 import { useStickers, useScroll } from "../hooks";
 import SearchBar from "./SearchBar";
 import StickerList from "./StickerList";
+import RecentStickerList from "./RecentStickerList";
 import Settings from "./Settings";
 import TopMenu from "./TopMenu";
-import { useHistory } from "../state/history";
 import { useTheme } from "../state/theme";
 import { useQuery } from "../state/query";
 
@@ -27,13 +27,10 @@ export default function App() {
   const {
     values: { color }
   } = useTheme();
-  const {
-    values: { stickers: historyStickers }
-  } = useHistory();
   const { query, setQuery } = useQuery();
   const [prevQuery, setPrevQuery] = useState("");
-  const [showSettings, setShowSettings] = useState(false);
-  const [showHistory, setShowHistory] = useState(false);
+  const [showingSettings, setShowingSettings] = useState(false);
+  const [showingRecent, setShowingRecent] = useState(false);
   const { distanceFromBottom, distanceFromTop } = useScroll();
   const {
     stickers,
@@ -45,7 +42,7 @@ export default function App() {
 
   // Trigger fetching more when close to bottom of page
   useEffect(() => {
-    if (showHistory) {
+    if (showingRecent) {
       return;
     }
 
@@ -75,15 +72,16 @@ export default function App() {
 
   return (
     <Grommet theme={makeGrommetTheme(color)}>
-      {showSettings && <Settings hide={() => setShowSettings(false)} />}
+      {showingSettings && <Settings hide={() => setShowingSettings(false)} />}
       <TopMenu
-        onShowSettings={() => setShowSettings(true)}
-        onShowHistory={() => setShowHistory(true)}
+        onShowSettings={() => setShowingSettings(true)}
+        setShowingRecent={setShowingRecent}
+        showingRecent={showingRecent}
         distanceFromTop={distanceFromTop}
       />
       <Box direction="column" align="center">
-        {showHistory ? (
-          <StickerList stickers={historyStickers} />
+        {showingRecent ? (
+          <RecentStickerList />
         ) : (
           <>
             <SearchBar />

@@ -1,46 +1,27 @@
 import React, { FunctionComponent } from "react";
-import styled from "styled-components";
 import copyToClipboard from "copy-to-clipboard";
-import Loader from "react-loader-spinner";
 import { toast } from "react-toastify";
 import { GIF } from "../types";
 import Sticker from "./Sticker";
 import Message from "./Message";
 import { useHistory } from "../state/history";
-import { List, LoadingWrap } from "./StickerList.css";
+import { List } from "./StickerList.css";
 
-interface StickerListProps {
-  stickers: GIF[] | null;
-  fetching?: boolean;
-  error?: string;
-}
+interface RecentStickerProps {}
 
-const StickerList: FunctionComponent<StickerListProps> = ({
-  stickers,
-  fetching,
-  error
-}) => {
-  const { addSticker: addToRecent } = useHistory();
+const RecentSticker: FunctionComponent<RecentStickerProps> = () => {
+  const {
+    values: { stickers: historyStickers },
+    removeSticker: removeFromRecent
+  } = useHistory();
 
-  if (fetching) {
-    return (
-      <LoadingWrap>
-        <Loader type="ThreeDots" color="#00BFFF" height="100" width="100" />
-      </LoadingWrap>
-    );
-  } 
-   
-  if (!stickers) {
-    return <Message text={"type to search for stickers"} />;
-  } 
-  
-  if (stickers.length === 0) {
-    return <Message text={"No results found"} />;
+  if (historyStickers.length === 0) {
+    return <Message text={"No recent stickers"} />;
   }
 
   return (
     <List>
-      {stickers.map(sticker => {
+      {historyStickers.map(sticker => {
         const { title, slug, images } = sticker;
         const { url } = images.fixed_width_small;
         const { url: originalUrl } = images.original;
@@ -56,7 +37,6 @@ const StickerList: FunctionComponent<StickerListProps> = ({
                 position: toast.POSITION.TOP_CENTER,
                 autoClose: 1000
               });
-              addToRecent(sticker);
             }}
           />
         );
@@ -65,4 +45,4 @@ const StickerList: FunctionComponent<StickerListProps> = ({
   );
 };
 
-export default StickerList;
+export default RecentSticker;

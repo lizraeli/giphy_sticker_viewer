@@ -2,11 +2,13 @@ import React, { FunctionComponent, useEffect } from "react";
 import styled from "styled-components";
 import { Box, Button } from "grommet";
 import { useTheme } from "../state/theme";
+import { useHistory } from "../state/history";
 
 interface MenuProps {
   onShowSettings: () => void;
-  onShowHistory: () => void;
+  setShowingRecent: (val: boolean) => void;
   distanceFromTop: number;
+  showingRecent: boolean;
 }
 
 interface TopMenuProps {
@@ -31,9 +33,10 @@ const scrollToTop = () => {
 };
 
 const TopMenu: FunctionComponent<MenuProps> = ({
-  onShowHistory,
   onShowSettings,
-  distanceFromTop
+  distanceFromTop,
+  setShowingRecent,
+  showingRecent
 }) => {
   const {
     values: { backgroundColor, color }
@@ -74,8 +77,19 @@ const TopMenu: FunctionComponent<MenuProps> = ({
         direction="row"
       >
         <Button label="settings" color={color} onClick={onShowSettings} />
-        <Button label="recent" color={color} onClick={onShowHistory} />
-
+        {showingRecent ? (
+          <Button
+            label="search"
+            color={color}
+            onClick={() => setShowingRecent(false)}
+          />
+        ) : (
+          <Button
+            label="recent"
+            color={color}
+            onClick={() => setShowingRecent(true)}
+          />
+        )}
       </Box>
     </Menu>
   );
