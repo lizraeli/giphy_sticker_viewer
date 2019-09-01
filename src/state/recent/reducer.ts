@@ -1,6 +1,5 @@
 import { IHistoryValues } from "./types";
 import { HistoryAction, HistoryActionType } from "./actions";
-import StickerList from "../../components/StickerList";
 
 export const historyReducer = (
   state: IHistoryValues,

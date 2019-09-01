@@ -10,13 +10,13 @@ import { IHistoryValues } from "./types";
 import { historyReducer } from "./reducer";
 import { HistoryActionType } from "./actions";
 
-interface IHistoryContext {
+interface IRecentContext {
   values: IHistoryValues;
   addSticker(sticker: GIF): void;
   removeSticker(stickerId: string): void;
 }
 
-export const HistoryContext = createContext<IHistoryContext>({
+export const RecentContext = createContext<IRecentContext>({
   values: {
     stickers: []
   },
@@ -28,32 +28,32 @@ export const HistoryContext = createContext<IHistoryContext>({
   }
 });
 
-export const HistoryProvider: FunctionComponent<ProviderProps> = ({
+export const RecentStickerProvider: FunctionComponent<ProviderProps> = ({
   children
 }) => {
-  const [history, historyDispatch] = useReducer(historyReducer, {
+  const [recent, recentDispatch] = useReducer(historyReducer, {
     stickers: []
   });
 
   const addSticker = useCallback((sticker: GIF) => {
-    historyDispatch({
+    recentDispatch({
       type: HistoryActionType.ADD_STICKER,
       sticker
     });
   }, []);
 
   const removeSticker = useCallback((stickerId: string) => {
-    historyDispatch({
+    recentDispatch({
       type: HistoryActionType.REMOVE_STICKER,
       stickerId
     });
   }, []);
 
   return (
-    <HistoryContext.Provider value={{ values: history, addSticker, removeSticker }}>
+    <RecentContext.Provider value={{ values: recent, addSticker, removeSticker }}>
       {children}
-    </HistoryContext.Provider>
+    </RecentContext.Provider>
   );
 };
 
-export const useHistory = () => useContext<IHistoryContext>(HistoryContext);
+export const useRecent = () => useContext<IRecentContext>(RecentContext);

@@ -7,7 +7,7 @@ import { nest } from "./utils";
 import App from "./components/App";
 import { ThemeProvider, useTheme } from "./state/theme";
 import { QueryProvider } from "./state/query";
-import { HistoryProvider } from "./state/history";
+import { RecentStickerProvider } from "./state/recent";
 
 function Root() {
   const {
@@ -31,4 +31,4 @@ function Root() {
 }
 
 const rootElement = document.getElementById("root");
-render(nest(ThemeProvider, QueryProvider, HistoryProvider, Root), rootElement);
+render(nest(ThemeProvider, QueryProvider, RecentStickerProvider, Root), rootElement);
