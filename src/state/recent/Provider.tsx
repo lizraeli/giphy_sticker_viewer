@@ -4,13 +4,13 @@ import React, {
   useContext,
   useCallback,
   useReducer,
-  useEffect,
-  useRef
+  useEffect
 } from "react";
 import { ProviderProps, GIF } from "../../types";
 import { IHistoryValues } from "./types";
 import { historyReducer } from "./reducer";
 import { HistoryActionType } from "./actions";
+import { useEffectOnUpdate } from "../../hooks/useEffectOnUpdate";
 
 interface IRecentContext {
   values: IHistoryValues;
@@ -18,7 +18,7 @@ interface IRecentContext {
   removeSticker(stickerId: string): void;
 }
 
-const RECENT_LOCAL_STORAGE_KEY = "recent"
+const RECENT_LOCAL_STORAGE_KEY = "recent";
 
 export const RecentContext = createContext<IRecentContext>({
   values: {
@@ -38,7 +38,6 @@ export const RecentStickerProvider: FunctionComponent<ProviderProps> = ({
   const [recentState, recentDispatch] = useReducer(historyReducer, {
     stickers: []
   });
-  const isInitialMount = useRef(true);
 
   const addSticker = useCallback((sticker: GIF) => {
     recentDispatch({
@@ -69,13 +68,9 @@ export const RecentStickerProvider: FunctionComponent<ProviderProps> = ({
   }, []);
 
   const { stickers } = recentState;
-  // Run only on update
-  useEffect(() => {
-    if (isInitialMount.current) {
-      isInitialMount.current = false;
-   } else {
-    localStorage.setItem(RECENT_LOCAL_STORAGE_KEY, JSON.stringify(stickers))
-   }
+
+  useEffectOnUpdate(() => {
+    localStorage.setItem(RECENT_LOCAL_STORAGE_KEY, JSON.stringify(stickers));
   }, [stickers]);
 
   return (
