@@ -13,6 +13,7 @@ import { HistoryActionType } from "./actions";
 interface IHistoryContext {
   values: IHistoryValues;
   addSticker(sticker: GIF): void;
+  removeSticker(stickerId: string): void;
 }
 
 export const HistoryContext = createContext<IHistoryContext>({
@@ -21,6 +22,9 @@ export const HistoryContext = createContext<IHistoryContext>({
   },
   addSticker: () => {
     throw new Error("addSticker called before it was defined");
+  },
+  removeSticker: () => {
+    throw new Error("removeSTicker called before it was defined");
   }
 });
 
@@ -38,8 +42,15 @@ export const HistoryProvider: FunctionComponent<ProviderProps> = ({
     });
   }, []);
 
+  const removeSticker = useCallback((stickerId: string) => {
+    historyDispatch({
+      type: HistoryActionType.REMOVE_STICKER,
+      stickerId
+    });
+  }, []);
+
   return (
-    <HistoryContext.Provider value={{ values: history, addSticker }}>
+    <HistoryContext.Provider value={{ values: history, addSticker, removeSticker }}>
       {children}
     </HistoryContext.Provider>
   );
