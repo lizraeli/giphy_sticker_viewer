@@ -37,10 +37,10 @@ export interface GIF {
   source_post_url: string;
 
   // The date on which this GIF was last updated.
-  update_datetime: string;
+  update_datetime?: string;
 
   // The date this GIF was added to the GIPHY database.
-  create_datetime: string;
+  create_datetime?: string;
 
   // The creation or upload date from this GIF's source.
   import_datetime: string;
@@ -50,7 +50,7 @@ export interface GIF {
 
   // An object containing data about the user
   // associated with this GIF, if applicable.
-  user: User;
+  user?: User;
 
   // An object containing data for various
   // available formats and sizes of this GIF.
@@ -170,6 +170,7 @@ export interface Images {
     // The size in bytes of the .webp file corresponding to this GIF.
     webp_size: string;
   };
+
   fixed_height_small_still: Image;
 
   // Data surrounding versions of this GIF
@@ -222,9 +223,12 @@ export interface Images {
 
   // Data surrounding a version of this GIF
   // downsized to be under 200kb.
-  downsized_small: Image & {
+  downsized_small: {
     // The size of this GIF in bytes.
-    size: string;
+    height: string;
+    mp4: string;
+    mp4_size: string;
+    width: string;
   };
 
   // Data surrounding the original version of this GIF. Good for desktop use.
