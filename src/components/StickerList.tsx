@@ -27,12 +27,12 @@ const StickerList: FunctionComponent<StickerListProps> = ({
         <Loader type="ThreeDots" color="#00BFFF" height="100" width="100" />
       </LoadingWrap>
     );
-  } 
-   
+  }
+
   if (!stickers) {
     return <Message text={"type to search for stickers"} />;
-  } 
-  
+  }
+
   if (stickers.length === 0) {
     return <Message text={"No results found"} />;
   }

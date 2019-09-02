@@ -1,6 +1,5 @@
 import styled from "styled-components";
 
-
 export const List = styled.div`
   display: "flex";
   flex-direction: "column";
@@ -8,7 +7,6 @@ export const List = styled.div`
   overflow: "hidden";
   margin-top: "2em";
 `;
-
 
 export const LoadingWrap = styled.div`
   margin-top: 2rem;

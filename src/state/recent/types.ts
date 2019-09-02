@@ -1,5 +1,5 @@
 import { GIF } from "../../types";
 
-export interface IHistoryValues {
+export interface HistoryValues {
   stickers: GIF[];
 }

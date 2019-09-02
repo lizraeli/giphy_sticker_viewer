@@ -6,7 +6,7 @@ import { useAxios } from "../hooks";
 
 const SEARCH_DELAY_MS = 500;
 
-export default function useStickers(query: string, numOfStickers: number = 25) {
+export default function useStickers(query: string, numOfStickers = 25) {
   const [stickers, setStickers] = useState<GIF[] | null>(null);
   const [offset, setOffset] = useState(0);
   const [prevQuery, setPrevQuery] = useState("");
@@ -41,8 +41,8 @@ export default function useStickers(query: string, numOfStickers: number = 25) {
 
     if (!moreStickers) {
       return;
-    }  
-    
+    }
+
     if (!stickers) {
       setStickers(moreStickers);
     } else {
@@ -70,8 +70,8 @@ export default function useStickers(query: string, numOfStickers: number = 25) {
   }, [query, offset]);
 
   const fetchMore = useCallback(() => {
-    setOffset(offset => offset + 1)
-  }, [])
+    setOffset(offset => offset + 1);
+  }, []);
 
   return {
     stickers,

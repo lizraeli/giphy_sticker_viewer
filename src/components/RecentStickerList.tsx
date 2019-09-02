@@ -6,9 +6,7 @@ import Message from "./Message";
 import { useRecent } from "../state/recent";
 import { List } from "./StickerList.css";
 
-interface RecentStickerProps {}
-
-const RecentSticker: FunctionComponent<RecentStickerProps> = () => {
+const RecentSticker: FunctionComponent<{}> = () => {
   const {
     values: { stickers: historyStickers },
     removeSticker: removeFromRecent

@@ -19,6 +19,6 @@ declare module "react-loader-spinner" {
     color?: string;
   }
 
-  declare const Loader: React.ComponentClass<LoaderProps>
+  declare const Loader: React.ComponentClass<LoaderProps>;
   export default Loader;
 }

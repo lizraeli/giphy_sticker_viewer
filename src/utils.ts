@@ -27,9 +27,9 @@ export function makeDispatcher<T, ActionArgs>(
   };
 }
 
-type Comp = React.FunctionComponent<any> | React.ComponentClass<any, any>
+type Comp = React.FunctionComponent<any> | React.ComponentClass<any, any>;
 
-export const nest = (...components: Comp[] ) => {
+export const nest = (...components: Comp[]) => {
   const reversed = [...components].reverse();
 
   const [first, ...rest] = reversed;

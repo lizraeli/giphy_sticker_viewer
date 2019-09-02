@@ -31,4 +31,7 @@ function Root() {
 }
 
 const rootElement = document.getElementById("root");
-render(nest(ThemeProvider, QueryProvider, RecentStickerProvider, Root), rootElement);
+render(
+  nest(ThemeProvider, QueryProvider, RecentStickerProvider, Root),
+  rootElement
+);

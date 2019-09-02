@@ -1,10 +1,7 @@
-import { IHistoryValues } from "./types";
+import { HistoryValues } from "./types";
 import { HistoryAction, HistoryActionType } from "./actions";
 
-export const historyReducer = (
-  state: IHistoryValues,
-  action: HistoryAction
-) => {
+export const historyReducer = (state: HistoryValues, action: HistoryAction) => {
   switch (action.type) {
     case HistoryActionType.ADD_STICKER: {
       const stickerExists = state.stickers.some(
@@ -25,7 +22,7 @@ export const historyReducer = (
       const stickers = state.stickers.filter(
         sticker => sticker.id === action.stickerId
       );
-    
+
       return {
         ...state,
         stickers
@@ -36,7 +33,7 @@ export const historyReducer = (
       return {
         ...state,
         stickers: action.stickers
-      }
+      };
     }
 
     default:

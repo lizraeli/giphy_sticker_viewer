@@ -11,12 +11,12 @@ import { ThemeValues } from "./types";
 import { themes } from "./constants";
 import { themeReducer } from "./reducer";
 
-interface IThemeContext {
+interface ThemeContext {
   values: ThemeValues;
   setTheme: (theme: string) => void;
 }
 
-const ThemeContext = createContext<IThemeContext>({
+const ThemeContext = createContext<ThemeContext>({
   values: themes.white,
   setTheme: () => {}
 });
@@ -43,4 +43,4 @@ export const ThemeProvider: FunctionComponent<ProviderProps> = ({
   );
 };
 
-export const useTheme = () => useContext<IThemeContext>(ThemeContext);
+export const useTheme = () => useContext<ThemeContext>(ThemeContext);

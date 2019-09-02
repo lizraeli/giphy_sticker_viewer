@@ -2,7 +2,7 @@ import React, { FunctionComponent } from "react";
 import styled from "styled-components";
 import { Box, Text, Layer, Button, ThemeContext } from "grommet";
 import { CirclePicker } from "react-color";
-import { useTheme, themes, themeList } from "../state/theme";
+import { useTheme, themeList } from "../state/theme";
 
 const colorList = themeList.map(theme => theme.backgroundColor);
 

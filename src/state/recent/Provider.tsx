@@ -7,20 +7,20 @@ import React, {
   useEffect
 } from "react";
 import { ProviderProps, GIF } from "../../types";
-import { IHistoryValues } from "./types";
+import { HistoryValues } from "./types";
 import { historyReducer } from "./reducer";
 import { HistoryActionType } from "./actions";
 import { useEffectOnUpdate } from "../../hooks/useEffectOnUpdate";
 
-interface IRecentContext {
-  values: IHistoryValues;
+interface RecentContext {
+  values: HistoryValues;
   addSticker(sticker: GIF): void;
   removeSticker(stickerId: string): void;
 }
 
 const RECENT_LOCAL_STORAGE_KEY = "recent";
 
-export const RecentContext = createContext<IRecentContext>({
+export const RecentContext = createContext<RecentContext>({
   values: {
     stickers: []
   },
@@ -82,4 +82,4 @@ export const RecentStickerProvider: FunctionComponent<ProviderProps> = ({
   );
 };
 
-export const useRecent = () => useContext<IRecentContext>(RecentContext);
+export const useRecent = () => useContext<RecentContext>(RecentContext);

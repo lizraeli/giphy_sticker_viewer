@@ -295,5 +295,5 @@ export interface Image {
 }
 
 export interface ProviderProps {
-  children: JSX.Element
+  children: JSX.Element;
 }

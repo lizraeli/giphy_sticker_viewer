@@ -24,6 +24,8 @@ export default function useAxiosGet<T>(
         if (cancelled) {
           return;
         }
+
+        setFetching(false);
         setData(response.data);
       } catch (err) {
         if (cancelled) {
@@ -32,18 +34,12 @@ export default function useAxiosGet<T>(
 
         setFetching(false);
         setError(err);
-      } finally {
-        if (cancelled) {
-          return;
-        }
-      
-        setFetching(false);
       }
     };
 
     if (debounceMs) {
       const timeoutId = setTimeout(() => {
-        if (cancelled){
+        if (cancelled) {
           return;
         }
         fetch();

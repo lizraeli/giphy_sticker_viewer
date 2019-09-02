@@ -1,8 +1,7 @@
-import React, { FunctionComponent, useEffect } from "react";
+import React, { FunctionComponent } from "react";
 import styled from "styled-components";
 import { Box, Button } from "grommet";
 import { useTheme } from "../state/theme";
-import { useRecent } from "../state/recent";
 
 interface MenuProps {
   onShowSettings: () => void;
