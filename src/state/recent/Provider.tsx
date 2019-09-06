@@ -18,7 +18,7 @@ interface RecentContext {
   removeSticker(stickerId: string): void;
 }
 
-const RECENT_LOCAL_STORAGE_KEY = "recent";
+export const RECENT_LOCAL_STORAGE_KEY = "recent";
 
 export const RecentContext = createContext<RecentContext>({
   values: {
