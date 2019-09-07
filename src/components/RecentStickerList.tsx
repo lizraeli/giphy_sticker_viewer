@@ -3,14 +3,14 @@ import copyToClipboard from "copy-to-clipboard";
 import { toast } from "react-toastify";
 import Sticker from "./Sticker";
 import Message from "./Message";
-import { useRecent } from "../state/recent";
+import { useRecentContext } from "../state/recent";
 import { List } from "./StickerList.css";
 
 const RecentSticker: FunctionComponent<{}> = () => {
   const {
     values: { stickers: historyStickers },
     removeSticker: removeFromRecent
-  } = useRecent();
+  } = useRecentContext();
 
   if (historyStickers.length === 0) {
     return <Message text={"No recent stickers"} />;

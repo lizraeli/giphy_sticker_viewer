@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import { GIF } from "../types";
 import Sticker from "./Sticker";
 import Message from "./Message";
-import { useRecent } from "../state/recent";
+import { useRecentContext } from "../state/recent";
 import { List, LoadingWrap } from "./StickerList.css";
 
 interface StickerListProps {
@@ -19,7 +19,7 @@ const StickerList: FunctionComponent<StickerListProps> = ({
   fetching,
   error
 }) => {
-  const { addSticker: addToRecent } = useRecent();
+  const { addSticker: addToRecent } = useRecentContext();
 
   if (fetching) {
     return (

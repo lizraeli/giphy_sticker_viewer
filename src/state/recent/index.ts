@@ -1,1 +1,5 @@
-export { RecentStickerProvider, RecentContext, useRecent } from "./Provider";
+export {
+  RecentStickerProvider,
+  RecentContext,
+  useRecentContext
+} from "./Provider";
