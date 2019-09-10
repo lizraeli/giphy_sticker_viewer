@@ -19,19 +19,16 @@ const makeGrommetTheme = (textColor: string) => ({
   }
 });
 
-const urlParams = new URLSearchParams(window.location.search);
-
 const stickerCount = 25;
 
 export default function App() {
   const {
     values: { color }
   } = useTheme();
-  const { query, setQuery } = useQuery();
-  const [prevQuery, setPrevQuery] = useState("");
   const [showingSettings, setShowingSettings] = useState(false);
   const [showingRecent, setShowingRecent] = useState(false);
   const { distanceFromBottom, distanceFromTop } = useScroll();
+  const { query } = useQuery();
   const {
     stickers,
     fetchMore: fetchMoreStickers,
@@ -50,25 +47,6 @@ export default function App() {
       fetchMoreStickers();
     }
   }, [distanceFromBottom]);
-
-  // Load query from URL on page load
-  useEffect(() => {
-    const queryFromUrl = urlParams.get("q");
-
-    if (queryFromUrl) {
-      setQuery(queryFromUrl);
-    }
-  }, []);
-
-  // Set query as url param
-  useEffect(() => {
-    if (query === prevQuery) {
-      return;
-    }
-
-    history.replaceState({}, "", `?q=${query}`);
-    setPrevQuery(query);
-  }, [query]);
 
   return (
     <Grommet theme={makeGrommetTheme(color)}>

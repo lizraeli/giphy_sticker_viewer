@@ -2,7 +2,7 @@ import { useCallback, useReducer, useEffect } from "react";
 import { GIF } from "../../types";
 import { historyReducer } from "./reducer";
 import { HistoryActionType } from "./actions";
-import { useEffectOnUpdate } from "../../hooks/useEffectOnUpdate";
+import { useEffectOnUpdate } from "../../hooks";
 
 export const RECENT_LOCAL_STORAGE_KEY = "recent";
 

@@ -1,10 +1,6 @@
-import React, {
-  FunctionComponent,
-  createContext,
-  useContext,
-  useState
-} from "react";
+import React, { FunctionComponent, createContext, useContext } from "react";
 import { ProviderProps } from "../../types";
+import { useQueryParam } from "../../hooks";
 
 interface QueryProps {
   query: string;
@@ -19,7 +15,7 @@ export const QueryContext = createContext<QueryProps>({
 export const QueryProvider: FunctionComponent<ProviderProps> = ({
   children
 }) => {
-  const [query, setQuery] = useState("");
+  const { paramValue: query, setParamValue: setQuery } = useQueryParam("q");
 
   return (
     <QueryContext.Provider value={{ query, setQuery }}>
