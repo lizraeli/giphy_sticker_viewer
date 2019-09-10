@@ -1,8 +1,8 @@
 import { useEffect, useRef } from "react";
 
-export function useEffectOnUpdate(
+export default function useEffectOnUpdate(
   effectCallback: (...args: any) => void,
-  deps: any[] | undefined
+  deps?: any[]
 ): void {
   const isInitialMount = useRef(true);
 
@@ -12,5 +12,5 @@ export function useEffectOnUpdate(
     } else {
       effectCallback();
     }
-  }, deps);
+  }, deps); // eslint-disable-line react-hooks/exhaustive-deps
 }
