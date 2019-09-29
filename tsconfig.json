@@ -5,7 +5,8 @@
   "compilerOptions": {
     "lib": [
       "dom",
-      "es2015"
+      "es2015",
+      "es2018"
     ],
     "jsx": "preserve",
     "target": "es5",
