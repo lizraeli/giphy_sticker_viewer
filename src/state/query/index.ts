@@ -1,1 +1,1 @@
-export { QueryProvider, useQuery } from "./Provider";
+export { QueryProvider, useQueryContext } from "./Provider";

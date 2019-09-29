@@ -12,10 +12,8 @@ export const QueryContext = createContext<QueryProps>({
   setQuery: () => {}
 });
 
-export const QueryProvider: FunctionComponent<ProviderProps> = ({
-  children
-}) => {
-  const { paramValue: query, setParamValue: setQuery } = useQueryParam("q");
+export const QueryProvider: FunctionComponent = ({ children }) => {
+  const { value: query, setValue: setQuery } = useQueryParam("q");
 
   return (
     <QueryContext.Provider value={{ query, setQuery }}>
@@ -24,4 +22,4 @@ export const QueryProvider: FunctionComponent<ProviderProps> = ({
   );
 };
 
-export const useQuery = () => useContext(QueryContext);
+export const useQueryContext = () => useContext(QueryContext);

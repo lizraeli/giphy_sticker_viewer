@@ -2,7 +2,7 @@ import React, { FunctionComponent } from "react";
 import styled from "styled-components";
 import { Box, FormField, TextInput } from "grommet";
 import { useTheme } from "../state/theme";
-import { useQuery } from "../state/query";
+import { useQueryContext } from "../state/query";
 
 const SearchField = styled(FormField)`
   ${({ color }) =>
@@ -16,7 +16,7 @@ const SearchBar: FunctionComponent = () => {
   const {
     values: { color }
   } = useTheme();
-  const { query, setQuery } = useQuery();
+  const { query, setQuery } = useQueryContext();
 
   return (
     <Box

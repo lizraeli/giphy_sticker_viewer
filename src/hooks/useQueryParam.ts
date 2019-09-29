@@ -1,7 +1,10 @@
-import { useEffect, useState } from "react";
-import useEffectOnUpdate from "./useEffectOnUpdate";
+import { useEffect, useState, useCallback } from "react";
 
-const useQueryParam = (paramName: string) => {
+const setQueryParam = (paramName: string, paramValue: string) => {
+  history.replaceState({}, "", `?${paramName}=${paramValue}`);
+};
+
+export default function useQueryParam(paramName: string) {
   const [paramValue, setParamValue] = useState("");
 
   /*
@@ -16,14 +19,13 @@ const useQueryParam = (paramName: string) => {
     }
   }, [paramName]);
 
-  /*
-   * Set query param to url
-   */
-  useEffectOnUpdate(() => {
-    history.replaceState({}, "", `?${paramName}=${paramValue}`);
-  }, [paramName, paramValue]);
+  const setParam = useCallback(
+    (value: string) => {
+      setParamValue(value);
+      setQueryParam(paramName, paramValue);
+    },
+    [paramName, paramValue]
+  );
 
-  return { paramValue, setParamValue };
-};
-
-export default useQueryParam;
+  return { value: paramValue, setValue: setParam };
+}

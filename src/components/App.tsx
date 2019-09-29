@@ -8,7 +8,7 @@ import RecentStickerList from "./RecentStickerList";
 import Settings from "./Settings";
 import TopMenu from "./TopMenu";
 import { useTheme } from "../state/theme";
-import { useQuery } from "../state/query";
+import { useQueryContext } from "../state/query";
 
 const makeGrommetTheme = (textColor: string) => ({
   global: {
@@ -28,7 +28,7 @@ export default function App() {
   const [showingSettings, setShowingSettings] = useState(false);
   const [showingRecent, setShowingRecent] = useState(false);
   const { distanceFromBottom, distanceFromTop } = useScroll();
-  const { query } = useQuery();
+  const { query } = useQueryContext();
   const {
     stickers,
     fetchMore: fetchMoreStickers,
