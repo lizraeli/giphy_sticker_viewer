@@ -1,7 +1,7 @@
 import { useEffect, useState, useCallback } from "react";
 
 const setQueryParam = (paramName: string, paramValue: string) => {
-  history.replaceState({}, "", `?${paramName}=${paramValue}`);
+  window.history.replaceState({}, "", `?${paramName}=${paramValue}`);
 };
 
 export default function useQueryParam(paramName: string) {
