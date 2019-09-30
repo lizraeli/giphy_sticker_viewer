@@ -30,6 +30,7 @@ const SearchBar: FunctionComponent = () => {
       <Box pad="medium">
         <SearchField
           id="query"
+          data-testid="query-formfield"
           label="Search for stickers"
           autoFocus
           color={color}
