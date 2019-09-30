@@ -19,5 +19,8 @@
     "resolveJsonModule": true,
     "noEmit": true,
     "isolatedModules": true
-  }
+  },
+  "include": [
+    "src"
+  ]
 }
