@@ -1,7 +1,5 @@
 {
-  "include": [
-    "./src/*"
-  ],
+  "extends": "./tsconfig.paths.json",
   "compilerOptions": {
     "lib": [
       "dom",
