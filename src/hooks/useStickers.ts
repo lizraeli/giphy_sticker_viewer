@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 import { STICKER_API_BASE_URL } from "../constants";
 import { GIF } from "../types";
 import { zipUniques } from "../utils";
-import { useAxios } from "../hooks";
+import { useAxiosGet } from "../hooks";
 
 const SEARCH_DELAY_MS = 500;
 
@@ -17,7 +17,7 @@ export default function useStickers(query: string, numOfStickers = 25) {
     data: stickersResponse,
     fetching,
     error: fetchingStickersError
-  } = useAxios<{
+  } = useAxiosGet<{
     data: GIF[];
   }>(url, SEARCH_DELAY_MS);
 
@@ -25,7 +25,7 @@ export default function useStickers(query: string, numOfStickers = 25) {
     data: moreStickersResponse,
     fetching: fetchingMore,
     error: fetchingMoreError
-  } = useAxios<{
+  } = useAxiosGet<{
     data: GIF[];
   }>(moreStickersUrl);
 
