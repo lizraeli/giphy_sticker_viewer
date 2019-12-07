@@ -1,7 +1,7 @@
 [build]
    command = "yarn run build"
    functions = "lambda"
-   publish = "dist"
+   publish = "build"
 
 [dev]
   command = "yarn start" # Command to start your dev server
