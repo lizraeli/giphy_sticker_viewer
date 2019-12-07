@@ -30,5 +30,8 @@
   "parserOptions": {
     "jsx": true,
     "useJSXTextNode": true
+  },
+  "globals": {
+    "process": true
   }
 }
