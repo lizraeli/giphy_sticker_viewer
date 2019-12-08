@@ -13,7 +13,7 @@
     "test:coverage": "react-scripts test --env=jsdom --coverage",
     "lint": "eslint './src/**/*.{ts,tsx}'",
     "eject": "react-scripts eject",
-    "start:lambda": "netlify-lambda serve lambda",
+    "start:lambda": "netlify-lambda serve lambda/stickers",
     "postinstall": "netlify-lambda install"
   },
   "dependencies": {
