@@ -1,4 +1,7 @@
+[![Netlify Status](https://api.netlify.com/api/v1/badges/2442892a-1996-4c4b-bdd7-d94281143f57/deploy-status)](https://app.netlify.com/sites/giphy-stickers/deploys)
+
 # Giphy Stickers Viewer
+
 
 A giphy stickers viewer developed with react and typescript, utilizing react hooks.
 
