@@ -7,7 +7,7 @@ const STICKER_API_PATH = "/v1/stickers/search";
 const STICKER_API_BASE_URL =
   GIPHY_API_HOST +
   STICKER_API_PATH +
-  `?api_key=${process.env.REACT_APP_GIPHY_API_KEY}`;
+  `?api_key=${process.env.GIPHY_API_KEY}`;
 
 /**
  * @typedef LambdaEvent
@@ -21,13 +21,11 @@ const STICKER_API_BASE_URL =
 
 /**
  * @param {LambdaEvent} event
- * @param {any} context
  * @returns {void}
  */
 const handler = async event => {
   try {
-    const { q, offset = 0 } = event.queryStringParameters;
-    console.log("env: ", process.env.REACT_APP_GIPHY_API_KEY);
+    const { q = "", offset = 0 } = event.queryStringParameters;
 
     const stickers = await axios.get(
       STICKER_API_BASE_URL + `&q=${q}&offset=${offset}`

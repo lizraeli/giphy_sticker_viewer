@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import { STICKERS_LAMBDA_URL } from "../constants";
+import { BASE_STICKERS_URL } from "../constants";
 import { GIF } from "../types";
 import { zipUniques } from "../utils";
 import { useAxios } from "../hooks";
@@ -60,11 +60,11 @@ export default function useStickers(query: string, numOfStickers = 25) {
     } else if (query !== prevQuery) {
       setOffset(0);
 
-      setUrl(STICKERS_LAMBDA_URL + `?q=${query}`);
+      setUrl(BASE_STICKERS_URL + `q=${query}`);
     } else {
       /* query === prevQuery */
       setMoreStickersUrl(
-        STICKERS_LAMBDA_URL + `?q=${query}&offset=${offset * numOfStickers}`
+        BASE_STICKERS_URL + `q=${query}&offset=${offset * numOfStickers}`
       );
     }
   }, [query, offset]);
