@@ -16,14 +16,19 @@ interface SettingsProps {
 
 const SettingsModal: FunctionComponent<SettingsProps> = ({ hide }) => {
   const { values, setTheme } = useTheme();
-  const { backgroundColor, color } = values;
+  const { backgroundColor, color, settingsBackgroundColor } = values;
 
   return (
     <ThemeContext.Extend
       value={{ layer: { background: { color: backgroundColor } } }}
     >
       <Layer onEsc={hide} onClickOutside={hide}>
-        <Box align="center" pad="xlarge" animation="fadeIn">
+        <Box
+          align="center"
+          pad="xlarge"
+          animation="fadeIn"
+          background={settingsBackgroundColor}
+        >
           <Text size="xlarge" margin="medium" color={color}>
             Theme
           </Text>

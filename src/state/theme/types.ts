@@ -1,6 +1,7 @@
 export interface ThemeValues {
   backgroundColor: string;
   stickerBackgroundColor: string;
+  settingsBackgroundColor: string;
   color: string;
 }
 
