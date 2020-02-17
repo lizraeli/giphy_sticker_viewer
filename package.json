@@ -14,11 +14,13 @@
     "lint": "eslint './src/**/*.{ts,tsx}'",
     "eject": "react-scripts eject",
     "start:lambda": "netlify-lambda serve lambda/stickers",
-    "postinstall": "netlify-lambda install"
+    "postinstall": "netlify-lambda install",
+    "cypress:open": "cypress open"
   },
   "dependencies": {
     "axios": "0.19.0",
     "copy-to-clipboard": "^3.1.0",
+    "cypress": "^4.0.2",
     "grommet": "^2.7.3",
     "netlify-lambda": "^1.6.3",
     "prop-types": "^15.7.2",
@@ -34,6 +36,7 @@
     "styled-components": "^4.3.2"
   },
   "devDependencies": {
+    "@testing-library/cypress": "^5.3.0",
     "@testing-library/jest-dom": "^4.1.0",
     "@testing-library/react": "^9.1.4",
     "@testing-library/react-hooks": "^2.0.1",
